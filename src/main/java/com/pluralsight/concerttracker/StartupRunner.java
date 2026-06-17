@@ -268,7 +268,10 @@ public class StartupRunner implements CommandLineRunner {
         System.out.println("Updated!");
     }
     private void deleteGenre(Scanner scanner) {
-
+        System.out.print("Artist id: ");
+        long id = scanner.nextLong();
+        artistService.deleteArtist(id);
+        System.out.println("Deleted.");
     }
 
 

@@ -60,7 +60,10 @@ public class ArtistService {
         artistRepository.save(artist);
     }
 
-    public void deleteArtist(Long id) {
+    public void deleteArtist(long id) {
+        if (!artistRepository.existsById(id)) {
+            throw new NotFoundException("No artist with id " + id);
+        }
         artistRepository.deleteById(id);
     }
 }
