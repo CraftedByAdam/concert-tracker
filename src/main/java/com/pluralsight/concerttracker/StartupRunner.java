@@ -212,7 +212,12 @@ public class StartupRunner implements CommandLineRunner {
         displayResults(results);
     }
     private void ListAllByMaxPrice(Scanner scanner) {
+        System.out.println("Enter max price: ");
+        double price = scanner.nextDouble();
+        scanner.nextLine();
 
+        List<Concert> results = concertService.searchByMaxPrice(price);
+        displayResults(results);
     }
     private void ListAllByPriceRange(Scanner scanner) {
 
