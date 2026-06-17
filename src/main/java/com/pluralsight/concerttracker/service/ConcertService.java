@@ -54,5 +54,25 @@ public class ConcertService {
         concertRepository.save(concert);
     }
 
-
+    public List<Concert> searchByYear(int year) {
+        return concertRepository.findByYear(year);
+    }
+    public List<Concert> searchByArtist(String name) {
+        return concertRepository.findByArtistName(name);
+    }
+    public List<Concert> searchByVenue(String venue) {
+        return concertRepository.findByVenueName(venue);
+    }
+    public List<Concert> searchByCity(String city) {
+        return concertRepository.findByCity(city);
+    }
+    public List<Concert> searchByMaxPrice(double price) {
+        return concertRepository.findByMaxPrice(price);
+    }
+    public List<Concert> searchByPriceRange(double min, double max) {
+        return concertRepository.findByPriceRange(min, max);
+    }
+    public List<Concert> searchByPriceAndYear(double price, int year) {
+        return concertRepository.findByPriceAndYear(price, year);
+    }
 }
