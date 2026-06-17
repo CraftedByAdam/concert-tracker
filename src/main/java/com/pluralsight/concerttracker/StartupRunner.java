@@ -289,8 +289,37 @@ public class StartupRunner implements CommandLineRunner {
     }
 
     private void promoterScreen(Scanner scanner) {
+        boolean running = true;
+        while (running) {
+            System.out.println("1) List promoter");
+            System.out.println("2) Add promoter");
+            System.out.println("3) Find by name");;
+            System.out.println("4) Delete");
+            System.out.println("0) Back");
+            System.out.print("Choose: ");
+
+            switch (scanner.nextLine()) {
+                case "1" -> ListAllPromoter(scanner);
+                case "2" -> AddPromoter(scanner);
+                case "3" -> findByName(scanner);
+                case "4" -> deletePromo(scanner);
+                case "0" -> running = false;
+                default -> System.out.println("Invalid input");
+            }
+        }
+    }
+    private void ListAllPromoter(Scanner scanner) {
+        System.out.println("\n---All promoters---");
+        for (Promoter p : promoterService.getAllPromoter()) {
+            System.out.println("Promoter Name: " + p.getName());
+        }
+    }
+    private void AddPromoter(Scanner scanner) {}
+    private void findByName(Scanner scanner) {}
+    private void deletePromo(Scanner scanner) {
 
     }
+
     private void reportScreen(Scanner scanner) {
 
     }
