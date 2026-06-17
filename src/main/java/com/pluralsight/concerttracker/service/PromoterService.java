@@ -1,7 +1,6 @@
 package com.pluralsight.concerttracker.service;
 
 import com.pluralsight.concerttracker.data.PromoterRepository;
-import com.pluralsight.concerttracker.models.Artist;
 import com.pluralsight.concerttracker.models.Promoter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +26,8 @@ public class PromoterService {
                 .orElseThrow(() -> new RuntimeException("Promoter not found."));
     }
 
-    public Promoter savePromoter(Promoter promoter) {
-        return promoterRepository.save(promoter);
+    public void savePromoter(Promoter promoter) {
+        promoterRepository.save(promoter);
     }
 
     public void deletePromoter(Long id) {

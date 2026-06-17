@@ -314,7 +314,13 @@ public class StartupRunner implements CommandLineRunner {
             System.out.println("Promoter Name: " + p.getName());
         }
     }
-    private void AddPromoter(Scanner scanner) {}
+    private void AddPromoter(Scanner scanner) {
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+
+        Promoter promoter = new Promoter(name);
+        promoterService.savePromoter(promoter);
+    }
     private void findByName(Scanner scanner) {}
     private void deletePromo(Scanner scanner) {
 
