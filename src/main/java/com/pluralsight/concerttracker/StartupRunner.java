@@ -220,10 +220,25 @@ public class StartupRunner implements CommandLineRunner {
         displayResults(results);
     }
     private void ListAllByPriceRange(Scanner scanner) {
+        System.out.println("Enter min price: ");
+        double minPrice = scanner.nextDouble();
+        System.out.println("Enter max price: ");
+        double maxPrice = scanner.nextDouble();
+        scanner.nextLine();
 
+        List<Concert> results = concertService.searchByPriceRange(minPrice, maxPrice);
+        displayResults(results);
     }
     private void AdvancedPriceYear(Scanner scanner) {
+        System.out.println("Enter max price: ");
+        double price = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.println("Enter erliest year: ");
+        int year = scanner.nextInt();
+        scanner.nextLine();
 
+        List<Concert> results = concertService.searchByPriceAndYear(price, year);
+        displayResults(results);
     }
     //helper method for all searches
     private void displayResults(List<Concert> results) {
