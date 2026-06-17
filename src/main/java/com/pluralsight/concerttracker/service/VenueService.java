@@ -1,6 +1,7 @@
 package com.pluralsight.concerttracker.service;
 
 import com.pluralsight.concerttracker.data.VenueRepository;
+import com.pluralsight.concerttracker.models.Concert;
 import com.pluralsight.concerttracker.models.Venue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,28 @@ public class VenueService {
         }
     }
 
+    public void findByMinCapacity(int capacity) {
+        List<Venue> venues = venueRepository.findByCapacityGreaterThanEqual(capacity);
+        if (venues.isEmpty()) {
+            System.out.println("No venue with capacity " + capacity);
+            return;
+        }
+        for (Venue venue : venues) {
+            System.out.println(venue.getName() + " - " + venue.getCity() + " - The capacity is: " + venue.getCapacity());
+        }
+    }
 
+    /*public void updateCapacity(Venue venue, int updatedCapacity) {
+        venue.setCapacity(updatedCapacity);
+        venueRepository.save(venue);
+        System.out.println("Capacity updated");
+    }*/
+
+    public void updateCapacity(long id, int updatedCapacity) {
+        Venue venue = getVenueById(id);
+        venue.setCapacity(updatedCapacity);
+        venueRepository.save(venue);
+    }
     public void deleteVenue(Long id) {
         venueRepository.deleteById(id);
     }

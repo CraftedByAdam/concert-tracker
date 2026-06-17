@@ -269,10 +269,17 @@ public class StartupRunner implements CommandLineRunner {
         venueService.findByName(name);
     }
     private void findByMinCapacity(Scanner scanner) {
-
+        System.out.print("Enter capacity: ");
+        int capacity = scanner.nextInt();
+        venueService.findByMinCapacity(capacity);
     }
     private void updateCapacity(Scanner scanner) {
-
+        System.out.print("Venue id: ");
+        long id = scanner.nextLong();
+        System.out.print("Update capacity: ");
+        int updatedCapacity = scanner.nextInt();
+        venueService.updateCapacity(id, updatedCapacity);
+        System.out.println("Updated!");
     }
     private void deleteVenue(Scanner scanner) {
 
