@@ -2,6 +2,7 @@ package com.pluralsight.concerttracker.service;
 
 import com.pluralsight.concerttracker.data.PromoterRepository;
 import com.pluralsight.concerttracker.models.Promoter;
+import com.pluralsight.concerttracker.models.Venue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,17 @@ public class PromoterService {
 
     public void savePromoter(Promoter promoter) {
         promoterRepository.save(promoter);
+    }
+
+    public void findByName(String name) {
+        List<Promoter> promoter = promoterRepository.findByNameContainingIgnoreCase(name);
+        if (promoter.isEmpty()) {
+            System.out.println("No promoter named " + name);
+            return;
+        }
+        for (Promoter p : promoter) {
+            System.out.println(p.getName());
+        }
     }
 
     public void deletePromoter(Long id) {
