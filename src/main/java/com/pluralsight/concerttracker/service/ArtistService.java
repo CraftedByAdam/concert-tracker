@@ -39,6 +39,17 @@ public class ArtistService {
         }
     }
 
+    public void findByName(String name) {
+        List<Artist> artists = artistRepository.findByNameContainingIgnoreCase(name);
+        if (artists.isEmpty()) {
+            System.out.println("No artist named " + name);
+            return;
+        }
+        for (Artist artist : artists) {
+            System.out.println(artist.getName() +  " - " + artist.getGenre());
+        }
+    }
+
     public void saveArtist(Artist artist) {
         artistRepository.save(artist);
     }
