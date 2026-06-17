@@ -36,6 +36,7 @@ public class Concert {
         this.promoter = promoter;
     }
 
+
     public long getId() {
         return id;
     }
