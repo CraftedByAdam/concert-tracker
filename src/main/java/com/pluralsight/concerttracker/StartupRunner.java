@@ -198,7 +198,11 @@ public class StartupRunner implements CommandLineRunner {
         displayResults(results);
     }
     private void ListAllByVenue(Scanner scanner) {
+        System.out.println("Enter venue: ");
+        String venue = scanner.nextLine();
 
+        List<Concert> results = concertService.searchByVenue(venue);
+        displayResults(results);
     }
     private void ListAllByCity(Scanner scanner) {
         System.out.println("Enter city: ");
