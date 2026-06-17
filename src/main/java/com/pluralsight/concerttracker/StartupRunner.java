@@ -13,6 +13,7 @@ import org.hibernate.dialect.function.array.HSQLArrayPositionFunction;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -183,11 +184,11 @@ public class StartupRunner implements CommandLineRunner {
     }
     //methods for searchConcertScreen
     private void ListAllByYear(Scanner scanner) {
-        /*System.out.print("Year: ");
+        System.out.println("Enter year: ");
         int year = scanner.nextInt();
-        for (Concert concert : concertService.byYear(year)) {
-            System.out.println(concert.getArtist() + " (" + concert.getConcert_year() + ")");
-        }*/
+
+        List<Concert> results = concertService.searchByYear(year);
+        displayResults(results);
     }
     private void ListAllByArtist(Scanner scanner) {
 
@@ -196,7 +197,11 @@ public class StartupRunner implements CommandLineRunner {
 
     }
     private void ListAllByCity(Scanner scanner) {
+        System.out.println("Enter city: ");
+        String city = scanner.nextLine();
 
+        List<Concert> results = concertService.searchByCity(city);
+        displayResults(results);
     }
     private void ListAllByMaxPrice(Scanner scanner) {
 
@@ -206,6 +211,16 @@ public class StartupRunner implements CommandLineRunner {
     }
     private void AdvancedPriceYear(Scanner scanner) {
 
+    }
+    //helper method for all searches
+    private void displayResults(List<Concert> results) {
+        if (results.isEmpty()) {
+            System.out.println("No concerts found from what you searched.");
+        }else {
+            for (Concert c : results) {
+                System.out.println("Artist name: " + c.getArtist().getName() + "Venue: " + c.getVenue().getName() + "Concert year: " + c.getConcert_year());
+            }
+        }
     }
 
     private void artistScreen(Scanner scanner) {
