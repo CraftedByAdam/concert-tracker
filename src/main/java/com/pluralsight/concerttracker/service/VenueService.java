@@ -1,10 +1,8 @@
 package com.pluralsight.concerttracker.service;
 
 import com.pluralsight.concerttracker.data.VenueRepository;
-import com.pluralsight.concerttracker.models.Concert;
 import com.pluralsight.concerttracker.models.Venue;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +34,17 @@ public class VenueService {
         List<Venue> venues = venueRepository.findByCity(city);
         if (venues.isEmpty()) {
             System.out.println("No venue in " + city);
+            return;
+        }
+        for (Venue venue : venues) {
+            System.out.println(venue.getName() + " - " + venue.getCity() + " - The capacity is: " + venue.getCapacity());
+        }
+    }
+
+    public void findByName(String name) {
+        List<Venue> venues = venueRepository.findByNameContainingIgnoreCase(name);
+        if (venues.isEmpty()) {
+            System.out.println("No venue named " + name);
             return;
         }
         for (Venue venue : venues) {

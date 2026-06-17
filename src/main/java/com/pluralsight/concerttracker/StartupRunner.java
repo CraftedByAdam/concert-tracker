@@ -264,7 +264,9 @@ public class StartupRunner implements CommandLineRunner {
         venueService.findByCity(city);
     }
     private void findByVenueName(Scanner scanner) {
-
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+        venueService.findByName(name);
     }
     private void findByMinCapacity(Scanner scanner) {
 

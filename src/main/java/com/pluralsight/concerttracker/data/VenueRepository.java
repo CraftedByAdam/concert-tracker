@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface VenueRepository extends JpaRepository<Venue,Long> {
 
-    //List<Venue> findByNameContainigIgnoreCase(String name);
+    List<Venue> findByNameContainingIgnoreCase(String name);
     List<Venue> findByCity(String city);
     //List<Venue> findCapacityGreaterThanEqual(Long capacity);//
 }
