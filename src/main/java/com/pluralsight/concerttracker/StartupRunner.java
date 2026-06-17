@@ -35,10 +35,12 @@ public class StartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        dataSeeder.seedConcertIfEmpty();
+        /*dataSeeder.seedConcertIfEmpty();
         dataSeeder.seedArtistIfEmpty();
         dataSeeder.seedVenueIfEmpty();
-        dataSeeder.seedPromoterIfEmpty();
+        dataSeeder.seedPromoterIfEmpty();*/
+
+        dataSeeder.loadData();
 
         Scanner scanner = new Scanner(System.in);
 
