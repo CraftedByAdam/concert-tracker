@@ -282,7 +282,10 @@ public class StartupRunner implements CommandLineRunner {
         System.out.println("Updated!");
     }
     private void deleteVenue(Scanner scanner) {
-
+        System.out.print("Venue id: ");
+        long id = scanner.nextLong();
+        venueService.deleteVenue(id);
+        System.out.println("Deleted.");
     }
 
     private void promoterScreen(Scanner scanner) {

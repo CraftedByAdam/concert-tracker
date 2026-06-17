@@ -75,7 +75,10 @@ public class VenueService {
         venue.setCapacity(updatedCapacity);
         venueRepository.save(venue);
     }
-    public void deleteVenue(Long id) {
+    public void deleteVenue(long id) {
+        if (!venueRepository.existsById(id)) {
+            throw new NotFoundException("No sneaker with id " + id);
+        }
         venueRepository.deleteById(id);
     }
 
