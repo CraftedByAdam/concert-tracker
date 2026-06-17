@@ -5,7 +5,9 @@ import com.pluralsight.concerttracker.models.Concert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ConcertService {
@@ -75,4 +77,102 @@ public class ConcertService {
     public List<Concert> searchByPriceAndYear(double price, int year) {
         return concertRepository.findByPriceAndYear(price, year);
     }
+
+    public void averagePriceByYear() {
+        List<Concert> concerts = concertRepository.findAll();
+
+        Map<Integer, Double> sumMap = new HashMap<>();
+        Map<Integer, Integer> countMap = new HashMap<>();
+
+        for (Concert c : concerts) {
+            int year = c.getConcert_year();
+            double price = c.getTicket_price();
+            double currentSum = sumMap.getOrDefault(year, 0.0);
+            sumMap.put(year, currentSum + price);
+            int currentCount = countMap.getOrDefault(year, 0);
+            countMap.put(year, currentCount + 1);
+        }
+
+        System.out.println("\n---Average Price By Year---");
+        for (int year : sumMap.keySet()) {
+            double total = sumMap.get(year);
+            int count = countMap.get(year);
+            double average = total / count;
+
+            System.out.println("Year: " + year + " | Average Price: $" + average);
+        }
+    }
+
+    public void venueRevenueReport() {
+        List<Concert> concerts = concertRepository.findAll();
+        Map<String, Double> venueRevenueMap = new HashMap<>();
+
+        for (Concert c : concerts) {
+            String venueName = c.getVenue().getName();
+            double concertIncome = c.getTicket_price() * c.getTicket_sold();
+            double totalSoFar = venueRevenueMap.getOrDefault(venueName, 0.0);
+            venueRevenueMap.put(venueName, totalSoFar + concertIncome);
+        }
+
+        System.out.println("\n---Revenue Per Venue---");
+        for (String name : venueRevenueMap.keySet()) {
+            System.out.println("Venue: " + name + " | Total Revenue: $" + venueRevenueMap.get(name));
+        }
+    }
+
+    public void busiestReport() {
+        List<Concert> concerts = concertRepository.findAll();
+        Map<String, Integer> venueCounts = new HashMap<>();
+        Map<String, Integer> artistCounts = new HashMap<>();
+
+        for (Concert c : concerts) {
+            String venueName = c.getVenue().getName();
+            String artistName = c.getArtist().getName();
+
+            venueCounts.put(venueName, venueCounts.getOrDefault(venueName, 0) + 1);
+            artistCounts.put(artistName, artistCounts.getOrDefault(artistName, 0) + 1);
+        }
+
+        String topVenue = "";
+        int maxVenue = 0;
+        for (String name : venueCounts.keySet()) {
+            if (venueCounts.get(name) > maxVenue) {
+                maxVenue = venueCounts.get(name);
+                topVenue = name;
+            }
+        }
+
+        String topArtist = "";
+        int maxArtist = 0;
+        for (String name : artistCounts.keySet()) {
+            if (artistCounts.get(name) > maxArtist) {
+                maxArtist = artistCounts.get(name);
+                topArtist = name;
+            }
+        }
+
+        System.out.println("\n---Busiest Reports---");
+        System.out.println("Busiest Venue: " + topVenue + " -" + maxVenue + " concerts-");
+        System.out.println("Busiest Artist: " + topArtist + " -" + maxArtist + " shows-");
+    }
+
+    public void capacityReport() {
+        List<Concert> concerts = concertRepository.findAll();
+
+        System.out.println("\n---Capacity Report---");
+        for (Concert c : concerts) {
+            int sold = c.getTicket_sold();
+            int capacity = c.getVenue().getCapacity();
+            double percentage = (sold * 100.0) / capacity;
+
+            String result = c.getArtist().getName() + " at " + c.getVenue().getName() + ": " + percentage + "% full";
+
+            if (sold >= capacity) {
+                result = result + " SOLD OUT!";
+            }
+
+            System.out.println(result);
+        }
+    }
+
 }

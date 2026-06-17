@@ -443,6 +443,24 @@ public class StartupRunner implements CommandLineRunner {
     }
 
     private void reportScreen(Scanner scanner) {
+        boolean running = true;
+        while (running) {
+            System.out.println("---Report---");
+            System.out.println("1)Revenue per Venue");
+            System.out.println("2)Busiest Venue & Artist");
+            System.out.println("3)Average Price by Year");
+            System.out.println("4)Capacity Report");
+            System.out.println("0)Back");
+            System.out.print("Choose: ");
 
+            switch (scanner.nextLine()) {
+                case "1" -> concertService.venueRevenueReport();
+                case "2" -> concertService.busiestReport();
+                case "3" -> concertService.averagePriceByYear();
+                case "4" -> concertService.capacityReport();
+                case "0" -> running = false;
+                default -> System.out.println("Invalid input");
+            }
+        }
     }
 }
