@@ -1,11 +1,15 @@
 package com.pluralsight.concerttracker;
 
+import com.pluralsight.concerttracker.models.Artist;
 import com.pluralsight.concerttracker.models.Concert;
+import com.pluralsight.concerttracker.models.Promoter;
+import com.pluralsight.concerttracker.models.Venue;
 import com.pluralsight.concerttracker.seeder.DataSeeder;
 import com.pluralsight.concerttracker.service.ArtistService;
 import com.pluralsight.concerttracker.service.ConcertService;
 import com.pluralsight.concerttracker.service.PromoterService;
 import com.pluralsight.concerttracker.service.VenueService;
+import org.hibernate.dialect.function.array.HSQLArrayPositionFunction;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +40,8 @@ public class StartupRunner implements CommandLineRunner {
         dataSeeder.seedPromoterIfEmpty();
 
         Scanner scanner = new Scanner(System.in);
+
+        //main menu
         boolean running = true;
         while (running) {
             System.out.println("1) Concerts");
@@ -47,21 +53,20 @@ public class StartupRunner implements CommandLineRunner {
             System.out.println("0) Quit");
             System.out.print("Choose: ");
 
-            switch (scanner.nextLine()) {
-                case "1" -> concertScreen(scanner);
-                case "2" -> searchConcertScreen(scanner);
-                case "3" -> artistScreen(scanner);
-                case "4" -> venueScreen(scanner);
-                case "5" -> promoterScreen(scanner);
-                case "6" -> reportScreen(scanner);
-                case "0" -> running = false;
+            switch (scanner.nextInt()) {
+                case 1 -> concertScreen(scanner);
+                case 2 -> searchConcertScreen(scanner);
+                case 3 -> artistScreen(scanner);
+                case 4 -> venueScreen(scanner);
+                case 5 -> promoterScreen(scanner);
+                case 6 -> reportScreen(scanner);
+                case 0 -> running = false;
                 default -> System.out.println("Invalid input");
             }
         }
     }
 
     private void concertScreen(Scanner scanner) {
-
         boolean running = true;
         while (running) {
             System.out.println("1) List all concerts");
@@ -85,21 +90,124 @@ public class StartupRunner implements CommandLineRunner {
             }
         }
     }
+    //methods for concertScreen
     private void listAllConcerts() {
         System.out.println("\n---All concerts---");
         for (Concert c : concertService.getAllConcert()) {
-            System.out.println("Artist Name: " + c.getArtist().getName() + " -" + " Venue: " + c.getVenue().getName() );
+            System.out.println("Artist Name: " + c.getArtist().getName() + " -" + " Venue: " + c.getVenue().getName());
         }
     }
-    private void viewConcertById(Scanner scanner){}
-    private void addConcert(Scanner scanner){}
-    private void updateConcert(Scanner scanner){}
-    private void updateTicketSold(Scanner scanner){}
-    private void deleteConcert(Scanner scanner){}
+    private void viewConcertById(Scanner scanner) {
+        System.out.print("Enter id: ");
+        long id = scanner.nextInt();
+        scanner.nextLine();
+        Concert concert = concertService.getConcertById(id);
+        System.out.println(concert.getArtist().getName() + " - " + concert.getVenue().getName() + " - " + concert.getPromoter().getName() + " - " + concert.getConcert_year() + " - " +
+                concert.getTicket_price() + " - " + concert.getTicket_sold());
+    }
+    private void addConcert(Scanner scanner) {
+        System.out.print("Enter year: ");
+        int year = scanner.nextInt();
+        System.out.println("Enter tickets sold: ");
+        int ticketSold = scanner.nextInt();
+        System.out.print("Enter price: ");
+        double price = scanner.nextDouble();
 
-    private void searchConcertScreen(Scanner scanner){
+        System.out.println("Enter artist id: ");
+        long artistId = scanner.nextLong();
+        System.out.println("Enter promoter id: ");
+        long promoterId = scanner.nextLong();
+        System.out.println("Enter venue id: ");
+        long venueId = scanner.nextLong();
+        scanner.nextLine();
+
+     /*   long amountOfTickets = 0;
+        if (ticketSold > venueService.ticketCount()) {
+            System.out.println("Capacity full.");
+        } else {*/
+        //Can never sell more than its venue capacity.
+        Artist artist = artistService.getArtistById(artistId);
+        Promoter promoter = promoterService.getPromoterById(promoterId);
+        Venue venue = venueService.getVenueById(venueId);
+        concertService.saveConcert(new Concert(year, price, ticketSold, artist, venue, promoter));
+        //}
+    }
+    private void updateConcert(Scanner scanner) {
+        System.out.print("Concert id: ");
+        long id = scanner.nextLong();
+        System.out.print("New price: ");
+        double price = scanner.nextDouble();
+        concertService.updatePrice(id, price);
+        System.out.println("Updated!");
+    }
+    private void updateTicketSold(Scanner scanner) {
+        System.out.print("Concert id: ");
+        long id = scanner.nextLong();
+        System.out.print("ticket sold: ");
+        int amount = scanner.nextInt();
+        concertService.updateTicketSold(id, amount);
+        System.out.println("Updated!");
+    }
+    private void deleteConcert(Scanner scanner) {
+        System.out.print("Concert id: ");
+        long id = scanner.nextLong();
+        concertService.deleteConcert(id);
+        System.out.println("Deleted.");
+    }
+
+    private void searchConcertScreen(Scanner scanner) {
+        boolean running = true;
+        while (running) {
+            System.out.println("1) By year");
+            System.out.println("2) By artist");
+            System.out.println("3) By venue");
+            System.out.println("4) By city");
+            System.out.println("5) By maximum price");
+            System.out.println("6) By price range");
+            System.out.println("7) Advanced");
+            System.out.println("0) Back");
+            System.out.print("Choose: ");
+
+            switch (scanner.nextLine()) {
+                case "1" -> ListAllByYear(scanner);
+                case "2" -> ListAllByArtist(scanner);
+                case "3" -> ListAllByVenue(scanner);
+                case "4" -> ListAllByCity(scanner);
+                case "5" -> ListAllByMaxPrice(scanner);
+                case "6" -> ListAllByPriceRange(scanner);
+                case "7" -> AdvancedPriceYear(scanner);
+                case "0" -> running = false;
+                default -> System.out.println("Invalid input");
+            }
+        }
+    }
+    //methods for searchConcertScreen
+    private void ListAllByYear(Scanner scanner) {
+        /*System.out.print("Year: ");
+        int year = scanner.nextInt();
+        for (Concert concert : concertService.byYear(year)) {
+            System.out.println(concert.getArtist() + " (" + concert.getConcert_year() + ")");
+        }*/
+    }
+    private void ListAllByArtist(Scanner scanner) {
 
     }
+    private void ListAllByVenue(Scanner scanner) {
+
+    }
+    private void ListAllByCity(Scanner scanner) {
+
+    }
+    private void ListAllByMaxPrice(Scanner scanner) {
+
+    }
+    private void ListAllByPriceRange(Scanner scanner) {
+
+    }
+    private void AdvancedPriceYear(Scanner scanner) {
+
+    }
+
     private void artistScreen(Scanner scanner) {
 
     }
