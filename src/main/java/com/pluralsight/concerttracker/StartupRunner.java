@@ -211,9 +211,71 @@ public class StartupRunner implements CommandLineRunner {
     private void artistScreen(Scanner scanner) {
 
     }
+
     private void venueScreen(Scanner scanner) {
 
+        boolean running = true;
+        while (running) {
+            System.out.println("1) List venues");
+            System.out.println("2) Add venue");
+            System.out.println("3) Find by city");
+            System.out.println("4) Find by name");
+            System.out.println("5) By minimum capacity");
+            System.out.println("6) Update capacity");
+            System.out.println("7) Delete");
+            System.out.println("0) Back");
+            System.out.print("Choose: ");
+
+            switch (scanner.nextLine()) {
+                case "1" -> ListAllVenue(scanner);
+                case "2" -> AddVenue(scanner);
+                case "3" -> findByCity(scanner);
+                case "4" -> findByVenueName(scanner);
+                case "5" -> findByMinCapacity(scanner);
+                case "6" -> updateCapacity(scanner);
+                case "7" -> deleteVenue(scanner);
+                case "0" -> running = false;
+                default -> System.out.println("Invalid input");
+            }
+        }
     }
+    //methods for venueScreen
+    private void ListAllVenue(Scanner scanner) {
+        System.out.println("\n---All venues---");
+        for (Venue v : venueService.getAllVenue()) {
+            System.out.println("Venue Name: " + v.getName());
+        }
+    }
+    private void AddVenue(Scanner scanner) {
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+        System.out.println("Enter city: ");
+        String city = scanner.nextLine();
+        System.out.print("Enter capacity: ");
+        int capacity = scanner.nextInt();
+        scanner.nextLine();
+
+        Venue venue = new Venue(name, city, capacity);
+        venueService.saveVenue(venue);
+    }
+    private void findByCity(Scanner scanner) {
+        System.out.print("Enter city: ");
+        String city = scanner.nextLine();
+        venueService.findByCity(city);
+    }
+    private void findByVenueName(Scanner scanner) {
+
+    }
+    private void findByMinCapacity(Scanner scanner) {
+
+    }
+    private void updateCapacity(Scanner scanner) {
+
+    }
+    private void deleteVenue(Scanner scanner) {
+
+    }
+
     private void promoterScreen(Scanner scanner) {
 
     }
