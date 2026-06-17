@@ -191,7 +191,11 @@ public class StartupRunner implements CommandLineRunner {
         displayResults(results);
     }
     private void ListAllByArtist(Scanner scanner) {
+        System.out.println("Enter artist: ");
+        String artist = scanner.nextLine();
 
+        List<Concert> results = concertService.searchByArtist(artist);
+        displayResults(results);
     }
     private void ListAllByVenue(Scanner scanner) {
 
@@ -218,7 +222,7 @@ public class StartupRunner implements CommandLineRunner {
             System.out.println("No concerts found from what you searched.");
         }else {
             for (Concert c : results) {
-                System.out.println("Artist name: " + c.getArtist().getName() + "Venue: " + c.getVenue().getName() + "Concert year: " + c.getConcert_year());
+                System.out.println("Artist name: " + c.getArtist().getName() + " Venue: " + c.getVenue().getName() + " Concert year: " + c.getConcert_year());
             }
         }
     }
