@@ -2,6 +2,7 @@ package com.pluralsight.concerttracker.service;
 
 import com.pluralsight.concerttracker.data.ArtistRepository;
 import com.pluralsight.concerttracker.models.Artist;
+import com.pluralsight.concerttracker.models.Venue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,16 @@ public class ArtistService {
     }
 
 
+    public void findByGenre(String genre) {
+        List<Artist> artists = artistRepository.findByGenre(genre);
+        if (genre.isEmpty()) {
+            System.out.println("No genre in " + genre);
+            return;
+        }
+        for (Artist artist : artists) {
+            System.out.println(artist.getName() + " - " + artist.getGenre());
+        }
+    }
 
     public void saveArtist(Artist artist) {
         artistRepository.save(artist);

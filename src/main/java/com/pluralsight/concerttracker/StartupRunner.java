@@ -249,7 +249,9 @@ public class StartupRunner implements CommandLineRunner {
         artistService.saveArtist(artist);
     }
     private void listByGenre(Scanner scanner) {
-
+        System.out.print("Enter genre: ");
+        String genre = scanner.nextLine();
+        artistService.findByGenre(genre);
     }
     private void listByName(Scanner scanner) {
 
