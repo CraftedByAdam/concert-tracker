@@ -259,7 +259,13 @@ public class StartupRunner implements CommandLineRunner {
         artistService.findByName(name);
     }
     private void updateGenre(Scanner scanner) {
-
+        System.out.print("Artist id: ");
+        long id = scanner.nextLong();
+        scanner.nextLine();
+        System.out.print("Update genre: ");
+        String updatedGenre = scanner.nextLine();
+        artistService.updateGenre(id, updatedGenre);
+        System.out.println("Updated!");
     }
     private void deleteGenre(Scanner scanner) {
 

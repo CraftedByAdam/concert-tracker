@@ -50,6 +50,12 @@ public class ArtistService {
         }
     }
 
+    public void updateGenre(long id, String updatedGenre) {
+        Artist artist = getArtistById(id);
+        artist.setGenre(updatedGenre);
+        artistRepository.save(artist);
+    }
+
     public void saveArtist(Artist artist) {
         artistRepository.save(artist);
     }
