@@ -28,8 +28,8 @@ public class ArtistService {
 
 
 
-    public Artist saveArtist(Artist artist) {
-        return artistRepository.save(artist);
+    public void saveArtist(Artist artist) {
+        artistRepository.save(artist);
     }
 
     public void deleteArtist(Long id) {
