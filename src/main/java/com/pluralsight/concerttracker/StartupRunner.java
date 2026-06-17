@@ -209,8 +209,52 @@ public class StartupRunner implements CommandLineRunner {
     }
 
     private void artistScreen(Scanner scanner) {
+        boolean running = true;
+        while (running) {
+            System.out.println("1) All artist");
+            System.out.println("2) Add artist");
+            System.out.println("3) By genre");
+            System.out.println("4) By name");
+            System.out.println("5) Update genre");
+            System.out.println("6) Delete");
+            System.out.println("0) Back");
+            System.out.print("Choose: ");
+
+            switch (scanner.nextLine()) {
+                case "1" -> listAllArtist(scanner);
+                case "2" -> addArtist(scanner);
+                case "3" -> listByGenre(scanner);
+                case "4" -> listByName(scanner);
+                case "5" -> updateGenre(scanner);
+                case "6" -> deleteGenre(scanner);
+                case "0" -> running = false;
+                default -> System.out.println("Invalid input");
+            }
+        }
+    }
+    //methods for artistScreen
+    private void listAllArtist(Scanner scanner) {
+        System.out.println("\n---All artists---");
+        for (Artist a : artistService.getAllArtist()) {
+            System.out.println("Artist Name: " + a.getName());
+        }
+    }
+    private void addArtist(Scanner scanner) {
 
     }
+    private void listByGenre(Scanner scanner) {
+
+    }
+    private void listByName(Scanner scanner) {
+
+    }
+    private void updateGenre(Scanner scanner) {
+
+    }
+    private void deleteGenre(Scanner scanner) {
+
+    }
+
 
     private void venueScreen(Scanner scanner) {
 
@@ -308,6 +352,7 @@ public class StartupRunner implements CommandLineRunner {
             }
         }
     }
+    //methods for promoterScreen
     private void ListAllPromoter(Scanner scanner) {
         System.out.println("\n---All promoters---");
         for (Promoter p : promoterService.getAllPromoter()) {

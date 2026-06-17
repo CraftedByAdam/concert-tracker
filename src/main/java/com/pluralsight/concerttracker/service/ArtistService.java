@@ -26,6 +26,8 @@ public class ArtistService {
                 .orElseThrow(() -> new RuntimeException("Artist not found."));
     }
 
+
+
     public Artist saveArtist(Artist artist) {
         return artistRepository.save(artist);
     }
