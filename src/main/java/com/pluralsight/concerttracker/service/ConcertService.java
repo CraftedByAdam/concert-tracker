@@ -43,7 +43,7 @@ public class ConcertService {
 
     public void deleteConcert(long id) {
         if (!concertRepository.existsById(id)) {
-            throw new NotFoundException("No sneaker with id " + id);
+            throw new NotFoundException("No concert with id " + id);
         }
         concertRepository.deleteById(id);
     }

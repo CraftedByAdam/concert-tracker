@@ -77,7 +77,7 @@ public class VenueService {
     }
     public void deleteVenue(long id) {
         if (!venueRepository.existsById(id)) {
-            throw new NotFoundException("No sneaker with id " + id);
+            throw new NotFoundException("No venue with id " + id);
         }
         venueRepository.deleteById(id);
     }

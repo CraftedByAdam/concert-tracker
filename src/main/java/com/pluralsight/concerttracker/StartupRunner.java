@@ -327,7 +327,10 @@ public class StartupRunner implements CommandLineRunner {
         promoterService.findByName(name);
     }
     private void deletePromo(Scanner scanner) {
-
+        System.out.print("Promoter id: ");
+        long id = scanner.nextLong();
+        promoterService.deletePromoter(id);
+        System.out.println("Deleted.");
     }
 
     private void reportScreen(Scanner scanner) {

@@ -42,7 +42,10 @@ public class PromoterService {
         }
     }
 
-    public void deletePromoter(Long id) {
+    public void deletePromoter(long id) {
+        if (!promoterRepository.existsById(id)) {
+            throw new NotFoundException("No promoter with id " + id);
+        }
         promoterRepository.deleteById(id);
     }
 }
