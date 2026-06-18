@@ -65,23 +65,18 @@ public class Concert {
     public Artist getArtist() {
         return artist;
     }
-
     public void setArtist(Artist artist) {
         this.artist = artist;
     }
-
     public Venue getVenue() {
         return venue;
     }
-
     public void setVenue(Venue venue) {
         this.venue = venue;
     }
-
     public Promoter getPromoter() {
         return promoter;
     }
-
     public void setPromoter(Promoter promoter) {
         this.promoter = promoter;
     }
