@@ -19,8 +19,6 @@ public class ConcertService {
         this.concertRepository = concertRepository;
     }
 
-    //public List<Concert> byYear(int year) { return concertRepository.findByYear(year); }
-
     public long count(){
         return concertRepository.count();
     }
@@ -102,7 +100,6 @@ public class ConcertService {
             System.out.println("Year: " + year + " | Average Price: $" + average);
         }
     }
-
     public void venueRevenueReport() {
         List<Concert> concerts = concertRepository.findAll();
         Map<String, Double> venueRevenueMap = new HashMap<>();
@@ -119,7 +116,6 @@ public class ConcertService {
             System.out.println("Venue: " + name + " | Total Revenue: $" + venueRevenueMap.get(name));
         }
     }
-
     public void busiestReport() {
         List<Concert> concerts = concertRepository.findAll();
         Map<String, Integer> venueCounts = new HashMap<>();
@@ -155,7 +151,6 @@ public class ConcertService {
         System.out.println("Busiest Venue: " + topVenue + " -" + maxVenue + " concerts-");
         System.out.println("Busiest Artist: " + topArtist + " -" + maxArtist + " shows-");
     }
-
     public void capacityReport() {
         List<Concert> concerts = concertRepository.findAll();
 
@@ -174,5 +169,4 @@ public class ConcertService {
             System.out.println(result);
         }
     }
-
 }
