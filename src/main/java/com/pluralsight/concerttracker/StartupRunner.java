@@ -35,15 +35,10 @@ public class StartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        /*dataSeeder.seedConcertIfEmpty();
-        dataSeeder.seedArtistIfEmpty();
-        dataSeeder.seedVenueIfEmpty();
-        dataSeeder.seedPromoterIfEmpty();*/
 
         dataSeeder.loadData();
 
         Scanner scanner = new Scanner(System.in);
-
         //main menu
         boolean running = true;
         while (running) {
@@ -124,16 +119,10 @@ public class StartupRunner implements CommandLineRunner {
         long venueId = scanner.nextLong();
         scanner.nextLine();
 
-     /*   long amountOfTickets = 0;
-        if (ticketSold > venueService.ticketCount()) {
-            System.out.println("Capacity full.");
-        } else {*/
-        //Can never sell more than its venue capacity.
         Artist artist = artistService.getArtistById(artistId);
         Promoter promoter = promoterService.getPromoterById(promoterId);
         Venue venue = venueService.getVenueById(venueId);
         concertService.saveConcert(new Concert(year, price, ticketSold, artist, venue, promoter));
-        //}
     }
     private void updateConcert(Scanner scanner) {
         System.out.print("Concert id: ");
@@ -266,7 +255,7 @@ public class StartupRunner implements CommandLineRunner {
             System.out.print("Choose: ");
 
             switch (scanner.nextLine()) {
-                case "1" -> listAllArtist(scanner);
+                case "1" -> listAllArtist();
                 case "2" -> addArtist(scanner);
                 case "3" -> listByGenre(scanner);
                 case "4" -> listByName(scanner);
@@ -278,7 +267,7 @@ public class StartupRunner implements CommandLineRunner {
         }
     }
     //methods for artistScreen
-    private void listAllArtist(Scanner scanner) {
+    private void listAllArtist() {
         System.out.println("\n---All artists---");
         for (Artist a : artistService.getAllArtist()) {
             System.out.println("Artist Name: " + a.getName());
@@ -335,7 +324,7 @@ public class StartupRunner implements CommandLineRunner {
             System.out.print("Choose: ");
 
             switch (scanner.nextLine()) {
-                case "1" -> ListAllVenue(scanner);
+                case "1" -> ListAllVenue();
                 case "2" -> AddVenue(scanner);
                 case "3" -> findByCity(scanner);
                 case "4" -> findByVenueName(scanner);
@@ -348,7 +337,7 @@ public class StartupRunner implements CommandLineRunner {
         }
     }
     //methods for venueScreen
-    private void ListAllVenue(Scanner scanner) {
+    private void ListAllVenue() {
         System.out.println("\n---All venues---");
         for (Venue v : venueService.getAllVenue()) {
             System.out.println("Venue Name: " + v.getName());
