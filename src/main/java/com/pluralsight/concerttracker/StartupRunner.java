@@ -308,7 +308,6 @@ public class StartupRunner implements CommandLineRunner {
         System.out.println("Deleted.");
     }
 
-
     private void venueScreen(Scanner scanner) {
 
         boolean running = true;
